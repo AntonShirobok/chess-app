@@ -27,11 +27,12 @@ const Online = {
   },
   inviteLink(id) {
     const c = this.cfg();
-    return c.BOT_USERNAME && c.APP_NAME ? `https://t.me/${c.BOT_USERNAME}/${c.APP_NAME}?startapp=g_${id}` : null;
+    if (!c.BOT_USERNAME) return null;
+    return c.APP_NAME ? `https://t.me/${c.BOT_USERNAME}/${c.APP_NAME}?startapp=g_${id}` : `https://t.me/${c.BOT_USERNAME}?startapp=g_${id}`;
   },
   share(id) {
     const link = this.inviteLink(id);
-    const text = link ? 'Сыграем в шахматы? ♟ Жми на ссылку:' : `Сыграем в шахматы? ♟ Открой приложение, вкладка «Игра» → «С другом», и введи код: ${id}`;
+    const text = `Сыграем в шахматы? ♟ Жми на ссылку. Если не откроется — в приложении «Игра» → «С другом» введи код ${id}`;
     const url = 'https://t.me/share/url?url=' + encodeURIComponent(link || ' ') + '&text=' + encodeURIComponent(text);
     try { if (tg && tg.openTelegramLink && tg.platform !== 'unknown') { tg.openTelegramLink(url); return; } } catch (e) {}
     window.open(url, '_blank');
