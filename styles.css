@@ -109,3 +109,6 @@ h3 { margin: 16px 0 6px; font-size: 16px; }
 .promo button { width: 64px; height: 64px; border: 0; border-radius: 12px; background: var(--card); cursor: pointer; }
 .promo img { width: 52px; height: 52px; }
 #nav .btn.sec { flex: 0 0 52px; }
+
+.code-input { flex: 1; min-width: 0; border: 1px solid color-mix(in srgb, var(--hint) 40%, transparent); background: var(--bg); color: var(--text); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: 17px; letter-spacing: 2px; text-transform: uppercase; }
+.code-big { font-size: 34px; font-weight: 800; letter-spacing: 6px; margin: 4px 0; }

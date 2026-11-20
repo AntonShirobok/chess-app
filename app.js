@@ -13,7 +13,7 @@ const Store = {
   key: 'chess_profile_v1',
   data: null,
   defaults() {
-    return { rating: 400, games: 0, w: 0, l: 0, d: 0, lessons: {}, mode: 'auto', manual: 0, hist: [400], updated: 0, game: null };
+    return { rating: 400, games: 0, w: 0, l: 0, d: 0, lessons: {}, mode: 'auto', manual: 0, hist: [400], updated: 0, game: null, pid: '', online: [] };
   },
   load() {
     try { this.data = Object.assign(this.defaults(), JSON.parse(localStorage.getItem(this.key) || '{}')); }
@@ -85,7 +85,7 @@ function openTab(tab) {
   currentTab = tab;
   document.querySelectorAll('#tabs button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   if (tab === 'learn') renderLearn();
-  if (tab === 'play') renderPlay();
+  if (tab === 'play') (playMode === 'friends' ? renderFriends() : renderPlay());
   if (tab === 'legends') renderLegends();
 }
 
@@ -371,6 +371,7 @@ function saveGame() {
 }
 
 function renderPlay() {
+  playMode = 'bot';
   setHeader('Игра с компьютером');
   if (!G) G = restoreGame();
   const p = Store.data;
@@ -378,6 +379,7 @@ function renderPlay() {
   const L = LEVELS[lvl];
   const lessonsDone = Object.keys(p.lessons).length;
   const my = newScreen(`
+    ${modeSegHtml('bot')}
     ${lessonsDone < 3 && !G ? '<div class="card">Совсем новичок? Сначала загляни во вкладку <b>🎓 Учиться</b> — там все правила с нуля.</div>' : ''}
     <div class="opp"><span>🤖 <b>${L.name}</b> <span class="muted">· уровень ${lvl + 1} · ≈${L.elo}</span></span>
       <span class="muted" id="youColor"></span></div>
@@ -403,6 +405,7 @@ function renderPlay() {
       <input type="range" min="0" max="${LEVELS.length - 1}" value="${p.manual}" id="lvlRange">
       <span id="lvlLabel"></span>
     </div>`);
+  bindModeSeg();
   const board = new Board($('#bwrap'));
   const alive = () => my === token;
   drawSpark();
@@ -717,4 +720,4 @@ if (tg) {
 }
 Store.load();
 updateChip();
-openTab(Store.data.game ? 'play' : 'learn');
+if (!handleStartParam()) openTab(Store.data.game ? 'play' : 'learn');
