@@ -17,7 +17,7 @@ const LEVELS = [
 const AI = {
   worker: null, seq: 0, pending: {},
   init() {
-    this.worker = new Worker('engine.js');
+    this.worker = new Worker('engine.js?v=3');
     this.worker.onmessage = (e) => {
       const cb = this.pending[e.data.id];
       delete this.pending[e.data.id];

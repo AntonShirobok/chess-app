@@ -38,7 +38,8 @@ nav#tabs button.active span { filter: none; opacity: 1; }
 
 /* Доска */
 .board-wrap { position: relative; width: 100%; max-width: 480px; margin: 0 auto; touch-action: manipulation; }
-.board { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); grid-template-rows: repeat(8, minmax(0, 1fr)); aspect-ratio: 1; width: 100%; border-radius: 6px; overflow: hidden; user-select: none; box-shadow: 0 2px 10px rgba(0,0,0,.15); }
+.board-wrap::before { content: ""; display: block; padding-top: 100%; } /* квадрат без aspect-ratio — работает в любом WebView */
+.board { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: repeat(8, 12.5%); grid-template-rows: repeat(8, 12.5%); border-radius: 6px; overflow: hidden; user-select: none; -webkit-user-select: none; box-shadow: 0 2px 10px rgba(0,0,0,.15); }
 .sq { position: relative; display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 0; overflow: hidden; }
 .sq.l { background: var(--sq-light); }
 .sq.d { background: var(--sq-dark); }
