@@ -41,7 +41,7 @@ class Board {
         const r = this.flipped ? i + 1 : 8 - i;
         const f = this.flipped ? 7 - j : j;
         const sq = FILES[f] + r;
-        const light = (f + r) % 2 === 1;
+        const light = (f + r) % 2 === 0;  // a1 (f=0, r=1) — тёмное поле
         const cls = ['sq', light ? 'l' : 'd'];
         if (h.last && h.last.includes(sq)) cls.push('last');
         if (h.marks && h.marks.includes(sq)) cls.push('mark');
